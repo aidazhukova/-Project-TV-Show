@@ -5,16 +5,17 @@
 body {
   box-sizing: border-box;
 }
-.allEpisode {
+.allEpisodes {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 .episodeCard {
   background-color: #fff;
-  max-width: 30%;
+  width: 30%;
   margin: 1rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
 .title {
   font-size: larger;
@@ -30,12 +31,13 @@ img {
   margin: 30px;
 }
 
-span {
+#license {
   font-weight: bold;
   border-radius: 3px;
+  font-weight: 400;
 }
 p {
-  color: rgb(201, 197, 197);
+  color: rgb(67, 65, 65);
   text-align: center;
   margin: 12px;
 }

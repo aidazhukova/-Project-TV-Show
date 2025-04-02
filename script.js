@@ -3,41 +3,74 @@ function setup() {
   const allEpisodes = getAllEpisodes();
 
   console.log(allEpisodes);
-  makePageForEpisodes(allEpisodes);
+  // makePageForEpisodes(allEpisodes);
+  prepareContainerForEpisodes();
+  renderAllEpisodes(allEpisodes);
 }
 
-let allEpisodes = document.createElement("div");
-allEpisodes.classList = "allEpisode";
-let root = document.getElementById("root");
-root.appendChild(allEpisodes);
+function prepareContainerForEpisodes() {
+  let allEpisodes = document.createElement("div");
+  allEpisodes.classList = "allEpisodes";
 
-let episodeCard = document.createElement("div");
-episodeCard.classList = "episodeCard";
-allEpisodes.appendChild(episodeCard);
+  let root = document.getElementById("root");
+  root.appendChild(allEpisodes);
+}
 
-let oneEpisode = getOneEpisode();
-let episodeName = oneEpisode.name;
+function renderOneEpisode(oneEpisode) {
+  let episodeCard = document.createElement("div");
+  episodeCard.classList = "episodeCard";
+  let allEpisodes = document.getElementsByClassName("allEpisodes")[0];
+  console.log(allEpisodes);
+  allEpisodes.appendChild(episodeCard);
 
-let episodeNum = oneEpisode.number;
+  let episodeName = oneEpisode.name;
 
-let seasonNum = oneEpisode.season;
+  let episodeNum = oneEpisode.number;
 
-let title = document.createElement("h3");
-title.textContent = `${episodeName} - S0${seasonNum} E0${episodeNum}`;
-title.classList = "title";
-console.log(title.textContent);
+  let seasonNum = oneEpisode.season;
 
-let episodeImage = oneEpisode.image.medium;
-const image = document.createElement("img");
-image.src = episodeImage;
+  let title = document.createElement("h3");
 
-let episodeSum = oneEpisode.summary;
-const shortSum = document.createElement("div");
-shortSum.innerHTML = episodeSum;
+  if (seasonNum < 9) {
+    seasonNum = `S0${seasonNum}`;
+  } else {
+    seasonNum = `S${seasonNum}`;
+  }
 
-episodeCard.appendChild(title);
-episodeCard.appendChild(image);
-episodeCard.appendChild(shortSum);
+  if (episodeNum < 10) {
+    episodeNum = `E0${episodeNum}`;
+  } else {
+    episodeNum = `E${episodeNum}`;
+  }
+  title.textContent = `${episodeName} - ${seasonNum}${episodeNum}`;
+
+  title.classList = "title";
+  console.log(title.textContent);
+
+  let episodeImage = oneEpisode.image.medium;
+  const image = document.createElement("img");
+  image.src = episodeImage;
+  image.alt = "cover image of episode";
+
+  let episodeSum = oneEpisode.summary;
+  const shortSum = document.createElement("div");
+  shortSum.innerHTML = episodeSum;
+
+  episodeCard.appendChild(title);
+  episodeCard.appendChild(image);
+  episodeCard.appendChild(shortSum);
+}
+
+function renderAllEpisodes(episodeList) {
+  for (let i = 0; i < episodeList.length; i++) {
+    let episode = episodeList[i];
+    renderOneEpisode(episode);
+  }
+  const license = document.createElement("span");
+  license.id = "license";
+  license.textContent = `All informations taken from the website (https://tvmaze.com/)`;
+  root.appendChild(license);
+}
 
 function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
