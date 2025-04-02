@@ -1,3 +1,41 @@
 #root {
-  color: red;
+  background-color: rgb(216, 213, 213);
+}
+
+body {
+  box-sizing: border-box;
+}
+.allEpisode {
+  display: flex;
+}
+.episodeCard {
+  background-color: #fff;
+  max-width: 30%;
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.title {
+  font-size: larger;
+  font-weight: bold;
+  border: solid;
+  border-radius: 4px;
+
+  padding: 15px;
+  margin-top: 0;
+  text-align: center;
+}
+img {
+  margin: 30px;
+}
+
+span {
+  font-weight: bold;
+  border-radius: 3px;
+}
+p {
+  color: rgb(201, 197, 197);
+  text-align: center;
+  margin: 12px;
 }
