@@ -2,8 +2,6 @@
 function setup() {
   const allEpisodes = getAllEpisodes();
 
-  console.log(allEpisodes);
-  // makePageForEpisodes(allEpisodes);
   prepareContainerForEpisodes();
   renderAllEpisodes(allEpisodes);
 }
@@ -20,7 +18,7 @@ function renderOneEpisode(oneEpisode) {
   let episodeCard = document.createElement("div");
   episodeCard.classList = "episodeCard";
   let allEpisodes = document.getElementsByClassName("allEpisodes")[0];
-  console.log(allEpisodes);
+
   allEpisodes.appendChild(episodeCard);
 
   let episodeName = oneEpisode.name;
@@ -45,7 +43,6 @@ function renderOneEpisode(oneEpisode) {
   title.textContent = `${episodeName} - ${seasonNum}${episodeNum}`;
 
   title.classList = "title";
-  console.log(title.textContent);
 
   let episodeImage = oneEpisode.image.medium;
   const image = document.createElement("img");
@@ -70,11 +67,6 @@ function renderAllEpisodes(episodeList) {
   license.id = "license";
   license.textContent = `All informations taken from the website (https://tvmaze.com/)`;
   root.appendChild(license);
-}
-
-function makePageForEpisodes(episodeList) {
-  const rootElem = document.getElementById("root");
-  // rootElem.textContent = `Got ${episodeList.length} episode(s)`;
 }
 
 window.onload = setup;
