@@ -12,7 +12,7 @@ body {
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.227);
 }
 
 header {
@@ -46,7 +46,7 @@ header select {
 
 #displayCount {
   font-style: italic;
-  color: #777;
+  color: #353434;
   margin-top: 10px;
 }
 
@@ -58,7 +58,7 @@ header select {
 }
 
 .article {
-  border: 1px solid #ddd;
+  border: 1px solid #777777;
   padding: 15px;
   border-radius: 6px;
   background-color: #f9f9f9;
@@ -83,7 +83,7 @@ header select {
 }
 
 .article a {
-  color: #007bff;
+  color: #0558b1;
   text-decoration: none;
   font-weight: bold;
 }
@@ -96,14 +96,13 @@ footer {
   text-align: center;
   margin-top: 30px;
   padding-top: 15px;
-  border-top: 1px solid #eee;
+  border-top: 1px solid #aeadad;
   color: #555;
   font-size: 0.9em;
 }
 
 footer a {
-  color: #007bff;
-  text-decoration: none;
+  color: #033972;
 }
 
 footer a:hover {
