@@ -1,4 +1,5 @@
 body {
+<<<<<<< HEAD
     font-family: sans-serif;
     margin: 20px;
     background-color: #f0f8ff; 
@@ -54,16 +55,87 @@ header input[type="text"], header select {
     color: #555;
     margin-top: 0;
     margin-bottom: 10px;
+=======
+  font-family: sans-serif;
+  margin: 20px;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+#root {
+  max-width: 960px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.227);
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  margin-top: 0;
+  color: #007bff;
+}
+
+header input[type="text"],
+header select {
+  padding: 10px;
+  margin: 10px 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+header input[type="text"] {
+  width: 40%;
+  min-width: 200px;
+}
+
+header select {
+  width: 30%;
+  min-width: 150px;
+}
+
+#displayCount {
+  font-style: italic;
+  color: #353434;
+  margin-top: 10px;
+}
+
+#episodeContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.article {
+  border: 1px solid #777777;
+  padding: 15px;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+}
+
+.article h2 {
+  margin-top: 0;
+  color: #333;
+  margin-bottom: 10px;
+>>>>>>> 1d197c8a3f61abf6a9320361ce4f9265501a84e9
 }
 
 .article img {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-    border-radius: 4px;
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+  border-radius: 4px;
 }
 
 .article p {
+<<<<<<< HEAD
     line-height: 1.6;
     margin-bottom: 10px;
     color: #444;
@@ -72,27 +144,46 @@ header input[type="text"], header select {
 .article a {
     color: #007bff;
     text-decoration: none;
+=======
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.article a {
+  color: #0558b1;
+  text-decoration: none;
+  font-weight: bold;
+>>>>>>> 1d197c8a3f61abf6a9320361ce4f9265501a84e9
 }
 
 .article a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 footer {
+<<<<<<< HEAD
     text-align: center;
     margin-top: 20px;
     padding-top: 10px;
     border-top: 1px solid #eee;
     color: #777;
     font-size: 0.9em;
+=======
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px solid #aeadad;
+  color: #555;
+  font-size: 0.9em;
+>>>>>>> 1d197c8a3f61abf6a9320361ce4f9265501a84e9
 }
 
 footer a {
-    color: #007bff;
-    text-decoration: none;
+  color: #033972;
 }
 
 footer a:hover {
+<<<<<<< HEAD
     text-decoration: underline;
 }
 
@@ -100,3 +191,7 @@ footer a:hover {
     color: #d32f2f; 
     font-weight: bold;
 }
+=======
+  text-decoration: underline;
+}
+>>>>>>> 1d197c8a3f61abf6a9320361ce4f9265501a84e9
