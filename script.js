@@ -1,6 +1,7 @@
 let allShows = null;
 let currentShowId = null;
 let cachedEpisodes = {};
+let searchHandler = null;
 
 function setup() {
   const contentContainer = document.getElementById("contentContainer");
@@ -17,9 +18,10 @@ function setup() {
       allShows = data.sort((a, b) =>
         a.name.toLowerCase().localeCompare(b.name.toLowerCase())
       );
-      makePageForShows(allShows);
-      preparePageForOneShow(allShows);
+
+      preparePageForAllShows(allShows);
       populateShowSelect(allShows);
+      setupSearch({ type: "shows", entries: allShows });
     })
     .catch((error) => {
       console.error("Error fetching shows:", error);
@@ -42,6 +44,15 @@ function populateShowSelect(shows) {
 }
 
 function handleShowChange(event) {
+  const allShowsContainer = document.getElementById("allShowsContainer");
+  allShowsContainer.classList.add("hidden");
+
+  const searchInput = document.getElementById("searchInput");
+  searchInput.value = "";
+  if (searchHandler) {
+    searchInput.removeEventListener("input", searchHandler);
+  }
+
   currentShowId = event.target.value;
   const contentContainer = document.getElementById("contentContainer");
   contentContainer.innerHTML = "<p>Loading episodes, please wait...</p>";
@@ -52,7 +63,7 @@ function handleShowChange(event) {
     if (cachedEpisodes[currentShowId]) {
       allEpisodes = cachedEpisodes[currentShowId];
       makePageForEpisodes(allEpisodes);
-      setupSearch(allEpisodes);
+      setupSearch({ type: "episodes", entries: allEpisodes });
       setupEpisodeSelect(allEpisodes);
     } else {
       fetch(`https://api.tvmaze.com/shows/${currentShowId}/episodes`)
@@ -66,7 +77,7 @@ function handleShowChange(event) {
           cachedEpisodes[currentShowId] = data;
           allEpisodes = data;
           makePageForEpisodes(allEpisodes);
-          setupSearch(allEpisodes);
+          setupSearch({ type: "episodes", entries: allEpisodes });
           setupEpisodeSelect(allEpisodes);
         })
         .catch((error) => {
@@ -76,27 +87,37 @@ function handleShowChange(event) {
         });
     }
   } else {
+    const searchInput = document.getElementById("searchInput");
+    searchInput.placeholder = "Search shows ...";
+
+    const episodeSelect = document.getElementById("episodeSelect");
+    episodeSelect.classList.add("hidden");
+
     contentContainer.innerHTML = "<p>Select a show to display episodes.</p>";
     document.getElementById("displayCount").textContent = "";
     allEpisodes = null;
+    allShowsContainer.classList.remove("hidden");
+    preparePageForAllShows(allShows);
+    setupSearch({ type: "shows", entries: allShows });
   }
 }
 
-function makePageForShows(shows) {
-  const contentShows = document.getElementById("contentContainer");
-  contentShows.innerHTML = "all shows";
-}
-
-function preparePageForOneShow(showList) {
+function preparePageForAllShows(showList) {
+  const allShowsContainer = document.getElementById("allShowsContainer");
+  allShowsContainer.innerHTML = "";
   showList.forEach((show) => {
-    const allShowsContainer = document.getElementById("allShowsContainer");
-
     const showContainer = document.createElement("article");
     showContainer.classList.add("article");
     allShowsContainer.appendChild(showContainer);
 
     const title = document.createElement("h2");
     title.textContent = `${show.name} `;
+    title.addEventListener("click", () => {
+      console.log(show);
+      handleShowChange({ target: { value: show.id } });
+      const showSelectElement = document.getElementById("showSelect");
+      showSelectElement.value = show.id;
+    });
     showContainer.appendChild(title);
 
     const showContent = document.createElement("div");
@@ -147,6 +168,12 @@ function preparePageForOneShow(showList) {
 }
 
 function makePageForEpisodes(episodeList) {
+  const searchInput = document.getElementById("searchInput");
+  searchInput.placeholder = "Search Episodes ...";
+
+  const episodeSelect = document.getElementById("episodeSelect");
+  episodeSelect.classList.remove("hidden");
+
   const contentContainer = document.getElementById("contentContainer");
   contentContainer.innerHTML = "";
 
@@ -187,18 +214,35 @@ function padNumber(number) {
   return number.toString().padStart(2, "0");
 }
 
-function setupSearch(episodes) {
+function setupSearch({ type, entries }) {
   const searchInput = document.getElementById("searchInput");
-  searchInput.addEventListener("input", (event) => {
+  searchHandler = (event) => {
+    document.getElementById("episodeSelect").value = "";
     const searchTerm = event.target.value.toLowerCase();
-    const filteredEpisodes = episodes.filter((episode) => {
-      return (
-        episode.name.toLowerCase().includes(searchTerm) ||
-        (episode.summary && episode.summary.toLowerCase().includes(searchTerm))
-      );
-    });
-    makePageForEpisodes(filteredEpisodes);
-  });
+    if (type === "episodes") {
+      const filteredEntries = entries.filter((entry) => {
+        return (
+          entry.name.toLowerCase().includes(searchTerm) ||
+          (entry.summary && entry.summary.toLowerCase().includes(searchTerm))
+        );
+      });
+      makePageForEpisodes(filteredEntries);
+    } else if (type === "shows") {
+      const filteredEntries = entries.filter((entry) => {
+        return (
+          entry.name.toLowerCase().includes(searchTerm) ||
+          (entry.summary && entry.summary.toLowerCase().includes(searchTerm)) ||
+          (entry.genres &&
+            entry.genres.some((genre) => {
+              return genre.toLowerCase().includes(searchTerm);
+            }))
+        );
+      });
+      preparePageForAllShows(filteredEntries);
+    }
+  };
+
+  searchInput.addEventListener("input", searchHandler);
 }
 
 function setupEpisodeSelect(episodes) {
@@ -213,6 +257,7 @@ function setupEpisodeSelect(episodes) {
   });
 
   episodeSelect.addEventListener("change", (event) => {
+    document.getElementById("searchInput").value = "";
     const selectedId = parseInt(event.target.value);
     if (selectedId) {
       const selectedEpisode = episodes.find(
