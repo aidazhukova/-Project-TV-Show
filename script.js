@@ -165,6 +165,11 @@ function preparePageForAllShows(showList) {
       showStatsContent.appendChild(showRuntime);
     }
   });
+  displayEpisodeCount({
+    type: "shows",
+    displayed: showList.length,
+    total: allShows ? allShows.length : 0,
+  });
 }
 
 function makePageForEpisodes(episodeList) {
@@ -207,7 +212,11 @@ function makePageForEpisodes(episodeList) {
     contentContainer.appendChild(article);
   });
 
-  displayEpisodeCount(episodeList.length, allEpisodes ? allEpisodes.length : 0);
+  displayEpisodeCount({
+    type: "episodes",
+    displayed: episodeList.length,
+    total: allEpisodes ? allEpisodes.length : 0,
+  });
 }
 
 function padNumber(number) {
@@ -270,9 +279,11 @@ function setupEpisodeSelect(episodes) {
   });
 }
 
-function displayEpisodeCount(displayed, total) {
+function displayEpisodeCount({ type, displayed, total }) {
   const displayCount = document.getElementById("displayCount");
-  displayCount.textContent = `Displaying ${displayed} / ${total} episodes`;
+  displayCount.textContent = `Displaying ${displayed} / ${total} ${
+    type === "shows" ? "shows" : "episodes"
+  }`;
 }
 
 window.onload = setup;
